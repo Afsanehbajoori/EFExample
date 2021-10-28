@@ -12,7 +12,7 @@ namespace EFExample
             using Context myContext = new Context();
 
 
-
+            // Skal køres kun en gang til at oprette database
             /* myContext.Student.Add(new Student()
              {
                  StudentName = "Allan",
@@ -68,41 +68,51 @@ namespace EFExample
 
              });*/
 
-            /* var myClass = myContext.Class.FirstOrDefault(x => x.MaxClassSize > 20);
+
+            //update
+             var myClass = myContext.Class.FirstOrDefault(x => x.MaxClassSize > 20);
              myClass.Name = "change Name";
-             myClass.MaxClassSize = 50;*/
+             myClass.MaxClassSize = 50;
+
 
             //vi kunne ikke slette en student, da er en FK studentId i Class table.
-            /*var myDelete = myContext.Student.FirstOrDefault(x => x.StudentId == 2);
-            myContext.Remove(myDelete);*/
+            var myDelete = myContext.Student.FirstOrDefault(x => x.StudentId == 2);
+            myContext.Remove(myDelete);
 
-            //var myClassDelete = myContext.Class.FirstOrDefault(x => x.Name == "RussianClass");
-            //myContext.Remove(myClassDelete);
+            //delete
+            var myClassDelete = myContext.Class.FirstOrDefault(x => x.Name == "RussianClass");
+            myContext.Remove(myClassDelete);
 
-            /*var NameUpdate = myContext.Student.FirstOrDefault(x => x.StudentId == 2);
+            //update
+            var NameUpdate = myContext.Student.FirstOrDefault(x => x.StudentId == 2);
             NameUpdate.StudentName = "Anna";
-            myContext.Update<Student>(NameUpdate);*/
+            myContext.Update<Student>(NameUpdate);
 
-            var studentAdd = new Student()
-            {
-                StudentName = "Bill",
-                StudentAge = 21,
-                ClassList = new List<Class>()
-                {
-                    new Class()
-                    {
-                        Name="FrenchClass",
-                        MaxClassSize=30,
-                        ClassLanguage=Enums.Language.French
-                    }
-                }
 
-            };
-            myContext.Student.Add(studentAdd);
-           
+            //insert
+             var studentAdd = new Student()
+             {
+                 StudentName = "Bill",
+                 StudentAge = 21,
+                 ClassList = new List<Class>()
+                 {
+                     new Class()
+                     {
+                         Name="FrenchClass",
+                         MaxClassSize=30,
+                         ClassLanguage=Enums.Language.French
+                     }
+                 }
+
+             };
+             myContext.Student.Add(studentAdd);
+
+           //query
+            var listOfStudent = myContext.Student.Where(x => x.StudentId == 2).FirstOrDefault();
             
 
-            
+
+                   
 
             myContext.SaveChanges();
         }
